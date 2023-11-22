@@ -1,0 +1,21 @@
+$vw_fontsize: 37.5;
+$vw_design: 375;
+
+html {
+  font-size: calc($vw_fontsize / $vw_design * 100vw);
+
+  @media only screen and (max-width: 320px) {
+    font-size: 32px;
+  }
+
+  @media only screen and (min-width: 540px) {
+    font-size: 54px;
+  }
+}
+
+body {
+  margin: 0 auto;
+  max-width: 540px;
+  min-width: 320px;
+  font-size: calc(14 / $vw_fontsize * 1rem);
+}
