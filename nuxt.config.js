@@ -34,9 +34,9 @@ export default {
   components: true,
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    "@nuxtjs/axios",
-    "cookie-universal-nuxt",
+  modules: ["@nuxtjs/axios", "cookie-universal-nuxt"],
+
+  buildModules: [
     [
       "@nuxtjs/dotenv",
       { path: __dirname, filename: ".env." + process.env.NODE_ENV },
