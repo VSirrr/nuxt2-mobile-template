@@ -61,20 +61,20 @@ export default {
       };
     },
     detectSupportWebp() {
-      if ('_yc_webp_support_' in window) {
-        return window._yc_webp_support_;
+      if ('_v_webp_support_' in window) {
+        return window._v_webp_support_;
       }
       return new Promise((resolve) => {
         let img = new Image();
         img.src =
           'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
         img.onload = function () {
-          window._yc_webp_support_ = true;
+          window._v_webp_support_ = true;
           resolve(true);
           img = null;
         };
         img.onerror = function () {
-          window._yc_webp_support_ = false;
+          window._v_webp_support_ = false;
           resolve(false);
           img = null;
         };
