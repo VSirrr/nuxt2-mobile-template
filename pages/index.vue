@@ -2,6 +2,7 @@
   <client-only placeholder="Loading...">
     <div>
       <nuxt-link to="/todo">to todo page</nuxt-link>
+      <nuxt-link to="/list">to list page</nuxt-link>
       <v-button type="default">default</v-button>
       <v-button type="primary" round inactive>primary</v-button>
       <v-button type="warnning">warnning</v-button>

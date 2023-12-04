@@ -1,7 +1,5 @@
 <template>
-  <nuxt />
+  <v-lazy>
+    <nuxt />
+  </v-lazy>
 </template>
-
-<script>
-export default {};
-</script>
