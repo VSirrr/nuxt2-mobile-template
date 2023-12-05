@@ -61,7 +61,7 @@ export default {
       this.mObserver = new MutationObserver(() => {
         this.observeImages();
       });
-      this.mObserver.observe(this.$el, { childList: true });
+      this.mObserver.observe(this.$el, { childList: true, subtree: true });
     },
     observeImages() {
       const imgs = document.querySelectorAll("img.lazy");
