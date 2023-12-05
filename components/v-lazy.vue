@@ -69,7 +69,9 @@ export default {
         return;
       }
       imgs.forEach((img) => {
-        this.iObserver.observe(img);
+        if (!img.dataset.load) {
+          this.iObserver.observe(img);
+        }
       });
     },
     async loadImage(elm) {
@@ -78,6 +80,7 @@ export default {
         this.isSupportWebp && elm.dataset.webp
           ? elm.dataset.webp
           : elm.dataset.origin;
+      elm.dataset.load = true;
       // img.onload = () => {
       //   elm.src = img.src;
       //   img = null;
