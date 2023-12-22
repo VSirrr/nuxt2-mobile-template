@@ -1,5 +1,3 @@
 <template>
-  <v-lazy>
-    <nuxt />
-  </v-lazy>
+  <nuxt />
 </template>

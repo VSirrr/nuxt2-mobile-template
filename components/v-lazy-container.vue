@@ -1,18 +1,18 @@
 <script>
 export default {
-  name: "v-lazy",
+  name: 'v-lazy-container',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div',
     },
     root: {
-      type: typeof HTMLElement !== "undefined" ? HTMLElement : Object,
+      type: typeof HTMLElement !== 'undefined' ? HTMLElement : Object,
       default: null,
     },
     rootMargin: {
       type: String,
-      default: "0px 0px 0px 0px",
+      default: '0px 0px 0px 0px',
     },
     threshold: {
       type: [Number, Array],
@@ -32,7 +32,7 @@ export default {
     this.initMutationObserver();
   },
   beforeDestroy() {
-    this.destroy();
+    this.observerDisconnect();
   },
   methods: {
     initIntersectionObserver() {
@@ -40,8 +40,7 @@ export default {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              this.loadImage(entry.target);
-              // just emit 'exposure' once
+              this.replaceImageSrc(entry.target);
               this.iObserver.unobserve(entry.target);
             }
           });
@@ -64,40 +63,31 @@ export default {
       this.mObserver.observe(this.$el, { childList: true, subtree: true });
     },
     observeImages() {
-      const imgs = document.querySelectorAll("img.lazy");
+      const imgs = document.querySelectorAll('img.lazy');
       if (!imgs || !imgs.length) {
         return;
       }
       imgs.forEach((img) => {
-        if (!img.dataset.load) {
+        if (!img.dataset.observed) {
+          img.dataset.observed = 1;
           this.iObserver.observe(img);
         }
       });
     },
-    async loadImage(elm) {
-      // let img = new Image();
+    replaceImageSrc(elm) {
       elm.src =
         this.isSupportWebp && elm.dataset.webp
           ? elm.dataset.webp
           : elm.dataset.origin;
-      elm.dataset.load = true;
-      // img.onload = () => {
-      //   elm.src = img.src;
-      //   img = null;
-      // };
-      // img.onerror = () => {
-      //   elm.src = elm.dataset.error;
-      //   img = null;
-      // };
     },
     detectSupportWebp() {
-      if ("_v_webp_support_" in window) {
+      if ('_v_webp_support_' in window) {
         return window._v_webp_support_;
       }
       return new Promise((resolve) => {
         let img = new Image();
         img.src =
-          "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+          'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
         img.onload = function () {
           window._v_webp_support_ = true;
           resolve(true);
@@ -110,7 +100,7 @@ export default {
         };
       });
     },
-    destroy() {
+    observerDisconnect() {
       this.iObserver.disconnect();
       this.mObserver.disconnect();
       this.mObserver = this.iObserver = null;

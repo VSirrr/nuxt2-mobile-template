@@ -1,18 +1,17 @@
 <template>
-  <ul style="height: 500px;overflow: auto;">
+  <v-lazy-container tag="ul">
     <li v-for="item in list" :key="item.masterId">
-      <img
-        class="logo lazy"
+      <v-lazy-img
+        class="logo"
         alt="car logo"
-        src="https://img5.bitautoimg.com/yc-common/imgs/lazyload-brand.png"
-        :data-origin="item.logoUrl"
-        :data-webp="item.logoUrlWebp.replace('{0}', '100')"
-        data-error="https://img5.bitautoimg.com/yc-common/imgs/lazyload-brand.png"
-        @error="onError"
+        :src="item.logoUrl"
+        :wp-src="item.logoUrlWebp.replace('{0}', '100')"
+        error-src="https://img5.bitautoimg.com/yc-common/imgs/lazyload-brand.png"
+        loading-src="https://img5.bitautoimg.com/yc-common/imgs/lazyload-brand.png"
       />
       {{ item.masterName }}
     </li>
-  </ul>
+  </v-lazy-container>
 </template>
 
 <script>
@@ -9375,12 +9374,6 @@ export default {
         },
       ],
     };
-  },
-  methods: {
-    onError(e) {
-      e.target.src =
-        "https://img5.bitautoimg.com/yc-common/imgs/lazyload-brand.png";
-    },
   },
 };
 </script>
